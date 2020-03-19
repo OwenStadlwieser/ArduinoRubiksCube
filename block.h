@@ -1,9 +1,8 @@
-#include <string>
 #include "globals.h"
 class cube{
 public:
 	void drawCube();
-	void transform(const std::string transformation, cube& Mcube);
+	void transform(const char transformation, cube& Mcube);
 	void drawTransformVert(int select);
 	void drawTransformHor(int select);
 private:
@@ -19,7 +18,6 @@ private:
 		{ {ORANGE, ORANGE, ORANGE}, {ORANGE, ORANGE, ORANGE}, {ORANGE, ORANGE, ORANGE} },
 		{ {BLUE, BLUE, BLUE}, {BLUE, BLUE, BLUE}, {BLUE, BLUE, BLUE} },
 	};
-	void startCopy(const uint32_t& (Mcube), uint32_t& tempCube);
 	void flipUp();
 	void topLines();
 	void frontLines();

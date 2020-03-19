@@ -49,8 +49,6 @@ int main()
 	cube NewCube;
 	Mcube.drawCube();
 	// Mcube.drawTransformVert(0);
-	delay(1500);
 	Mcube.transform('B', Mcube);
 	Mcube.drawCube();
-	delay(1500);
 }
