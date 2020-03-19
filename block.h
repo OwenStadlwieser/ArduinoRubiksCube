@@ -1,20 +1,25 @@
-
+#include <string>
 #include "globals.h"
 class cube{
 public:
-	uint32_t cubeMatrix[6][3][3] = {
-		{ {ORANGE, RED ,RED}, {GREEN, RED, RED}, {BLUE, RED, RED} },
-		{ {BLUE,WHITE ,WHITE}, {GREEN, WHITE, WHITE}, {RED, WHITE, WHITE} },
-		{ {GREEN, GREEN, GREEN}, {GREEN, GREEN, GREEN}, {GREEN, GREEN, GREEN} },
-		{ {YELLOW, YELLOW, YELLOW}, {YELLOW, YELLOW, YELLOW}, {YELLOW, YELLOW, YELLOW} },
-		{ {ORANGE, ORANGE, ORANGE}, {ORANGE, ORANGE, ORANGE}, {ORANGE, ORANGE, ORANGE} },
-		{ {BLUE, BLUE, BLUE}, {BLUE, BLUE, BLUE}, {BLUE, BLUE, BLUE} },
-	};
 	void drawCube();
-	void transform(const char* transformation, int select);
+	void transform(const std::string transformation, cube& Mcube);
 	void drawTransformVert(int select);
 	void drawTransformHor(int select);
 private:
+	unsigned int cubeMatrix[6][3][3] = {
+		// front from left to right, top to bottom (i.e. (1,1) is top left, (3, 3) is bottom right)
+		{ {RED, RED ,RED}, {RED, RED, RED}, {RED, RED, RED} },
+		//side from right to left, top to bottom (i.e. (1,1) is top right, (3,3) is bottom left)
+		{ {WHITE,WHITE ,WHITE}, {WHITE, WHITE, WHITE}, {WHITE, WHITE, WHITE} },
+		{ {GREEN, GREEN, GREEN}, {GREEN, GREEN, GREEN}, {GREEN, GREEN, GREEN} },
+		{ {YELLOW, YELLOW, YELLOW}, {YELLOW, YELLOW, YELLOW}, {YELLOW, YELLOW, YELLOW} },
+		//  top where from left corner then diagonal upward (i.e. (1,1) is left corner, (3,3) is right corner, (2,1) is up and 
+		// right of (1,1))
+		{ {ORANGE, ORANGE, ORANGE}, {ORANGE, ORANGE, ORANGE}, {ORANGE, ORANGE, ORANGE} },
+		{ {BLUE, BLUE, BLUE}, {BLUE, BLUE, BLUE}, {BLUE, BLUE, BLUE} },
+	};
+	void startCopy(const uint32_t& (Mcube), uint32_t& tempCube);
 	void flipUp();
 	void topLines();
 	void frontLines();

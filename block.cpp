@@ -1,3 +1,4 @@
+#include <string.h>
 #include "block.h"
 void cube::topLines()
 {
@@ -25,10 +26,179 @@ void cube::frontLines()
 	drawLine(x1 - 3 + xscale, y1+25, x1 + xscale, y1+25+yheight);
 	drawLine(x1 + 2*xscale - 3, y1+50, x1 + 2*xscale, y1+50+yheight);
 }
-void cube::transform(const char* transformation, int select)
-{
-	
+
+void cube::transform(const char transformation, cube& Mcube){
+	unsigned int tempCube[6][3][3];
+	bool transformed = false;
+	// create copy (tempCube) from original cube
+	for(int i = 0; i < 6; i++){
+		for(int j = 0; j < 3; j++){
+			for(int k = 0; k < 3; k++){
+				tempCube[i][j][k] = Mcube.cubeMatrix[i][j][k];
+			}	
+		}			
+	}
+
+	if( transformation == 'U'){
+		transformed = true;
+
+		// transformations for top face
+		for(int i = 0; i < 3; i++){
+			for(int k = 0; k < 3; k++){
+					tempCube[4][i][k] = Mcube.cubeMatrix[4][k][2-i];
+			}
+		}
+
+		for(int j = 0; j < 4; j++)
+		{
+			for(int i = 0; i < 3; i++)
+			{
+				if(j%2 == 0){
+					tempCube[j][0][i] = Mcube.cubeMatrix[(j+1)][0][2-i];
+				}
+				else if(j == 1){
+					tempCube[1][0][i] = Mcube.cubeMatrix[2][0][i];
+				}
+				else if(j == 3){
+					tempCube[3][0][i] = Mcube.cubeMatrix[0][0][i];
+				}
+			}
+		}
+	}	
+
+	else if(transformation == 'F'){
+		transformed = true;
+		// this->startCopy(Mcube, tempCube);
+		for(int i = 0; i < 3; i++){
+			for(int k = 0; k < 3; k++){
+					// abs(i-2) is counts down when i counts up
+					tempCube[0][i][k] = Mcube.cubeMatrix[0][2-k][i];
+			}
+		}
+
+		//transformations for edges of front face
+		for (int i = 0; i< 3; i++){
+			tempCube[1][i][2] = Mcube.cubeMatrix[4][0][i];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[4][0][i] = Mcube.cubeMatrix[3][2-i][2];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[3][i][2] = Mcube.cubeMatrix[5][0][i];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[5][0][i] = Mcube.cubeMatrix[1][2-i][2];
+		}
+	}	
+
+	if(transformation == 'R'){
+		transformed = true;
+
+		// this->startCopy(Mcube, tempCube);
+		for(int i = 0; i < 3; i++){
+			for(int k = 0; k < 3; k++){
+					// abs(i-2) is counts down when i counts up
+					tempCube[1][i][k] = Mcube.cubeMatrix[1][k][abs(i-2)];
+			}
+		}
+
+		//transformations for edges of front face
+		for (int i = 0; i< 3; i++){
+			tempCube[0][i][2] = Mcube.cubeMatrix[5][i][2];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[4][i][2] = Mcube.cubeMatrix[0][abs(i-2)][2];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[2][i][2] = Mcube.cubeMatrix[4][i][2];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[5][0][i] = Mcube.cubeMatrix[2][abs(i-2)][2];
+		}
+	}	
+
+	else if(transformation == 'L'){
+		transformed = true;
+		// transformations for down face
+		for(int i = 0; i < 3; i++){
+			for(int k = 0; k < 3; k++){
+					// abs(i-2) is counts down when i counts up
+					tempCube[3][i][k] = Mcube.cubeMatrix[3][2-k][i];
+			}
+		}
+
+		//transformations for edges of down face
+		for (int i = 0; i< 3; i++){
+			tempCube[0][i][0] = Mcube.cubeMatrix[4][2-i][0];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[4][i][0] = Mcube.cubeMatrix[2][i][0];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[2][i][0] = Mcube.cubeMatrix[5][2-i][0];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[5][i][0] = Mcube.cubeMatrix[0][i][0];
+		}
+	}
+	else if(transformation == 'D'){
+		transformed = true;
+		// transformations for down face
+		for(int i = 0; i < 3; i++){
+			for(int k = 0; k < 3; k++){
+					// abs(i-2) is counts down when i counts up
+					tempCube[5][i][k] = Mcube.cubeMatrix[5][abs(k-2)][i];
+			}
+		}
+		//transformations for edges of down face
+		for (int i = 0; i< 3; i++){
+			tempCube[0][2][i] = Mcube.cubeMatrix[3][2][i];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[1][2][i] = Mcube.cubeMatrix[0][abs(i-2)][2];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[2][i][2] = Mcube.cubeMatrix[4][i][2];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[5][0][i] = Mcube.cubeMatrix[2][abs(i-2)][2];
+		}
+	}
+	else if(transformation == 'B'){
+		transformed = true;
+		for(int i = 0; i < 3; i++){
+			for(int k = 0; k < 3; k++){
+					// abs(i-2) is counts down when i counts up
+					tempCube[2][i][k] = Mcube.cubeMatrix[2][k][2-i];
+			}
+		}
+
+		//transformations for edges of front face
+		for (int i = 0; i< 3; i++){
+			tempCube[4][2][i] = Mcube.cubeMatrix[1][i][0];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[3][i][0] = Mcube.cubeMatrix[4][2][2-i];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[5][2][i] = Mcube.cubeMatrix[3][i][0];
+		}
+		for (int i = 0; i< 3; i++){
+			tempCube[1][i][0] = Mcube.cubeMatrix[5][2][2-i];
+		}
+	}
+	if (transformed == true){
+		//recopy tempCube back into original cube
+		for(int i = 0; i < 6; i++){
+			for(int j = 0; j < 3; j++){
+				for(int k = 0; k < 3; k++){
+					Mcube.cubeMatrix[i][j][k] = tempCube[i][j][k];
+				}	
+			}			
+		}
+	}
 }
+
 // j increases as  u go down, q as u go right
 void cube::drawFront(int q, int j)
 {
@@ -127,7 +297,7 @@ void cube::drawTop(int q, int j)
 			topSquares[j][q].D2positionLower[1][0], topSquares[j][q].D2positionLower[1][1],
 			topSquares[j][q].D2positionLower[2][0], topSquares[j][q].D2positionLower[2][1], this->cubeMatrix[4][j][q]
 		);
-		
+		topLines();
 	}
 }
 void cube::drawCube()

@@ -46,8 +46,11 @@ int main()
 {
 	setup();
 	cube Mcube;
+	cube NewCube;
 	Mcube.drawCube();
-	Mcube.cubeMatrix[0][0][0] = RED;
-	Mcube.drawTransformVert(0);
-
+	// Mcube.drawTransformVert(0);
+	delay(1500);
+	Mcube.transform('B', Mcube);
+	Mcube.drawCube();
+	delay(1500);
 }
