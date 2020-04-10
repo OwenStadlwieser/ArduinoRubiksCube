@@ -1,0 +1,36 @@
+Owen Stadlwieser and Martin Rudolf
+Final Project
+CMPUT275, W2020
+
+
+Arduino Rubik's Cube Solver
+
+Files Contained:
+Makefile block.cpp main.cpp block.h globals.h swipeManager.h
+
+
+Wiring Instructions:
+No wires.
+
+
+Required Components:
+Arduino, USB Cable, Color TFT Display
+
+
+Running Instructions:
+
+Plug your Arduino into your desktop/laptop via the USB Cable and attach your Color TFT display.
+In your terminal, enter "arduino-port-select" then enter "1" and "1" again.
+Enter the directory with the files contained and enter "make" followed by "make upload". The program should now upload.
+
+
+Rubik's Cube Operations:  
+
+The Rubik's Cube is flippable so that the other faces of the cube are accessible without modifying the cube in any way. To apply a flip, tap on the screen near the left-top, left-bottom, right-top or right-bottom edges to have the cube flip in that direction.
+
+Any transformation defined under Singmaster notation [1] can be implemented by swiping on a row or column of the cube. 
+
+The user has touchscreen buttons allowing for cube "Scramble" or "Solve" at any point while the program is running. "Scramble" will randomly scramble the cube, and, once it is done scrambling, a timer will begin to count up. "Solve" will apply transformations to solve the cube.
+
+[1] Wikipedia, "Rubik's Cube," [Online]. Available:
+https://en.wikipedia.org/wiki/Rubik's_Cube#Move_notation. [Accessed 6 March 2020].
